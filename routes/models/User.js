@@ -37,6 +37,40 @@ userSchema.pre("save", async function(next) { //pre-hook (körs innan något spa
 });
 
 
+//Jämför lösenord
+userSchema.methods.comparePassword = async function(password) {
+    try {
+        return await bcrypt.compare(password , this.password) //jämför lösenord
+
+    }catch(error) { //vid error
+        throw(error);
+    }
+};
+
+//inloggning
+
+userSchema.statics.login = async function (username, password) {
+    try {
+        const user = await this.findOne({username}); //hitta användare med username
+        if(!user) { //om användare ej finns
+            throw new error("Invalid Username"); //error
+        }
+
+        //jämför lösenrod
+        const passwordMatch = await user.comparePassword(password);
+
+        if(!passwordMatch) { //om lösenord ej matcthar
+            throw new error("Invalid username");//error
+        }
+
+        return user;
+
+    } catch (error) { //error
+        throw error;
+    }
+};
+
+
 
  //användra regristreras
 userSchema.statics.register = async function(username, password) {

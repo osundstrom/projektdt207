@@ -8,6 +8,8 @@ const jwt = require("jsonwebtoken");//jwt
 require("dotenv").config(); //.env
 
 
+
+
 const User = require("./models/User"); //User från models/User
 
 
@@ -109,11 +111,11 @@ router.post("/login", async (request, response) => { //vid /login
             //jwt skapas
             const payloadUser = {username: username}; //skapar payloadUser
             const token = jwt.sign(payloadUser, process.env.JWT_SECRET_KEY, {expiresIn: "1h"}) //skapar en token, giltig 1h.
-            const answear = { //skapar answear som jag sen kan hämta token ifrån
+            const recivedToken = { //skapar recivedToken som jag sen kan hämta token ifrån
                 message: "Logged in",
                 token: token
             }
-            response.status(200).json({answear})//respone med status 200 och skickar med answear objektet
+            response.status(200).json({recivedToken})//respone med status 200 och skickar med answear objektet
         }
 
 
