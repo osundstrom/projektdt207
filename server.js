@@ -11,9 +11,7 @@ const authRoutes = require("./routes/authRoutes"); //authRoutes
 
 const User = require("./routes/models/User");
 
-app.use(cors({
-    orgin: "http://localhost:1234"
-})); //cors app
+app.use(cors()); //cors app
 app.use(express.json());  //json
 
 
@@ -38,7 +36,7 @@ app.get("/api/secret", validateToken, async (request, response) => { //skyddat r
     //----------------------------------------------//
 
     try {
-        testUsers = await User.find({})
+        const testUsers = await User.find({})
         return response.json(testUsers)
     } catch (error) {
         console.log(error) //Loggar error
