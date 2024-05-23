@@ -19,14 +19,58 @@ require("dotenv").config(); //dotenv
 
 app.use("/api", authRoutes); //hantera /api med authRoutes
 
+
+
+
+//skapar ett schema
+const workexperienceSchema = new mongoose.Schema({
+    companyname: {
+        type: String, //typ
+        required: [true, "Måste ha med företagsnamn"] //Måste ha, text för egen error
+    },
+
+    jobtitle: {
+        type: String, //typ
+        required: [true, "Måste ha med roll"] //Måste ha, text för egen error
+    },
+
+    location: {
+        type: String, //typ
+        required: [true, "Måste ha med plats"]//Måste ha, text för egen error
+    },
+    startdate: {
+        type: Date, //typ
+        required: [true, "Måste ha med startdatum"]//Måste ha, text för egen error
+    },
+    enddate: {
+        type: Date, //typ
+        required: [true, "Måste ha med slutdatum"]//Måste ha, text för egen error
+    }
+});
+
+//Skapar en model
+const workexperience = mongoose.model("Workexperience", workexperienceSchema);
+
+test = "https://moment-3-nosql.onrender.com"
 //skyddad
-app.get("/api/secret", validateToken, (request, response) => { //skyddat route, krävs JWT token
+app.get("/api/secret", validateToken, async (request, response) => { //skyddat route, krävs JWT token
     response.json({message: "skyddad"}); //svar
     console.log("skyddad"); //konsoll
 
+    //----------------------------------------------//
+
+    try { //try
+        let results = await workexperience.find({}, {__v: 0 })//hämtar allt utom __v i workexperience
+
+        return response.json(results); //Returnera som json
+    }
+    catch(error) { //Cahch för error
+        response.json({message: "failed to get workexperiences"}) //Skriver ut
+        console.log(error) //Loggar error
+    }
 
 
-    
+
 
 
 })
