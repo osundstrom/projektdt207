@@ -5,9 +5,10 @@ const router = express.Router(); //router
 const mongoose = require("mongoose"); //Mongoose
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");//jwt
+const cors = require("cors"); //CORS (cross orgin resource sharing) så vi kan hämta informationen från webbsidan.
 require("dotenv").config(); //.env
 
-
+app.use(cors()); 
 
 
 const User = require("./models/User"); //User från models/User
