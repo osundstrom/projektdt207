@@ -78,10 +78,10 @@ app.get("/api/secret", validateToken, async (request, response) => { //skyddat r
         }
 
         const TestData = await TestFetch.json();
-        res.json({ message: "Protected", workexperiences: TestData });
+        response.json({ message: "Protected", workexperiences: TestData });
         console.log("Protected route accessed and external data retrieved");
     } catch (error) {
-        res.status(500).json({ message: "Failed get" });
+        response.status(500).json({ message: "Failed get" });
         console.error(error);
     }
 
