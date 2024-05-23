@@ -23,35 +23,6 @@ app.use("/api", authRoutes); //hantera /api med authRoutes
 
 
 
-//skapar ett schema
-const workexperienceSchema = new mongoose.Schema({
-    companyname: {
-        type: String, //typ
-        required: [true, "Måste ha med företagsnamn"] //Måste ha, text för egen error
-    },
-
-    jobtitle: {
-        type: String, //typ
-        required: [true, "Måste ha med roll"] //Måste ha, text för egen error
-    },
-
-    location: {
-        type: String, //typ
-        required: [true, "Måste ha med plats"]//Måste ha, text för egen error
-    },
-    startdate: {
-        type: Date, //typ
-        required: [true, "Måste ha med startdatum"]//Måste ha, text för egen error
-    },
-    enddate: {
-        type: Date, //typ
-        required: [true, "Måste ha med slutdatum"]//Måste ha, text för egen error
-    }
-});
-
-//Skapar en model
-const workexperience = mongoose.model("Workexperience", workexperienceSchema);
-
 //-------------------------------------------------------------//
 //-------------------------------------------------------------//
 //-------------------------GET------------------------------------//
@@ -67,26 +38,7 @@ app.get("/api/secret", validateToken, async (request, response) => { //skyddat r
 
     //----------------------------------------------//
 
-    try {
-        const TestFetch = await fetch(process.env.URL2, {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${process.env.JWT_SECRET_KEY}` // If the external API requires an API key or token
-            }
-        });
-
-        if (!TestFetch.ok) {
-            throw new Error('Failed to fetch data from external API');
-        }
-
-        const TestData = await TestFetch.json();
-        response.json({ message: "Protected", workexperiences: TestData });
-        console.log("Protected route accessed and external data retrieved");
-    } catch (error) {
-        response.status(500).json({ message: "Failed get" });
-        console.error(error);
-    }
-
+ 
 
 })
 
