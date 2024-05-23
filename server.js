@@ -25,6 +25,10 @@ app.get("/api/secret", validateToken, (request, response) => { //skyddat route, 
     console.log("skyddad"); //konsoll
 
 
+
+    
+
+
 })
 
 
