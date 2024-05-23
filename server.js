@@ -21,7 +21,6 @@ app.use("/api", authRoutes); //hantera /api med authRoutes
 
 
 
-
 //skapar ett schema
 const workexperienceSchema = new mongoose.Schema({
     companyname: {
@@ -51,26 +50,20 @@ const workexperienceSchema = new mongoose.Schema({
 //Skapar en model
 const workexperience = mongoose.model("Workexperience", workexperienceSchema);
 
-test = "https://moment-3-nosql.onrender.com"
+//-------------------------------------------------------------//
+//-------------------------------------------------------------//
+//-------------------------GET------------------------------------//
+
+
+
+
+
 //skyddad
 app.get("/api/secret", validateToken, async (request, response) => { //skyddat route, krävs JWT token
     response.json({message: "skyddad"}); //svar
     console.log("skyddad"); //konsoll
 
-    //----------------------------------------------//
-
-    try { //try
-        let results = await workexperience.find({}, {__v: 0 })//hämtar allt utom __v i workexperience
-
-        return response.json(results); //Returnera som json
-    }
-    catch(error) { //Cahch för error
-        response.json({message: "failed to get workexperiences"}) //Skriver ut
-        console.log(error) //Loggar error
-    }
-
-
-
+    
 
 
 })
