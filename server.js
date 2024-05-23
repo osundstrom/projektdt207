@@ -63,7 +63,27 @@ app.get("/api/secret", validateToken, async (request, response) => { //skyddat r
     response.json({message: "skyddad"}); //svar
     console.log("skyddad"); //konsoll
 
-    
+    //----------------------------------------------//
+
+    try {
+        const TestFetch = await fetch(process.env.URL2, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${process.env.JWT_SECRET_KEY}` // If the external API requires an API key or token
+            }
+        });
+
+        if (!TestFetch.ok) {
+            throw new Error('Failed to fetch data from external API');
+        }
+
+        const TestData = await TestFetch.json();
+        res.json({ message: "Protected", workexperiences: TestData });
+        console.log("Protected route accessed and external data retrieved");
+    } catch (error) {
+        res.status(500).json({ message: "Failed get" });
+        console.error(error);
+    }
 
 
 })
