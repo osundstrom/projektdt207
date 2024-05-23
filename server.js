@@ -9,6 +9,7 @@ const mongoose = require("mongoose"); //Mongoose
 const jwt = require("jsonwebtoken");//jwt json web token
 const authRoutes = require("./routes/authRoutes"); //authRoutes
 
+const User = require("./routes/models/User");
 
 app.use(cors({
     orgin: "http://localhost:1234"
@@ -29,15 +30,19 @@ app.use("/api", authRoutes); //hantera /api med authRoutes
 
 
 
-
-
 //skyddad
 app.get("/api/secret", validateToken, async (request, response) => { //skyddat route, krävs JWT token
-    response.json({message: "skyddad"}); //svar
+    //response.json({message: "skyddad"}); //svar
     console.log("skyddad"); //konsoll
 
     //----------------------------------------------//
 
+    try {
+        testUsers = await User.find({})
+        return response.json(testUsers)
+    } catch (error) {
+        console.log(error) //Loggar error
+    }
  
 
 })
