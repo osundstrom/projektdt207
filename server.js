@@ -10,7 +10,9 @@ const jwt = require("jsonwebtoken");//jwt json web token
 const authRoutes = require("./routes/authRoutes"); //authRoutes
 
 
-app.use(cors()); //cors app
+app.use(cors({
+    orgin: "http://localhost:1234"
+})); //cors app
 app.use(express.json());  //json
 
 
