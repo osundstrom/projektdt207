@@ -46,6 +46,21 @@ app.get("/api/secret", validateToken, async (request, response) => { //skyddat r
 })
 
 
+app.post("/api/secret", validateToken, async (request, response) => {
+    
+});
+
+
+app.put("/api/secret/:id", validateToken, async (request, response) => {
+    
+});
+
+
+app.delete("/api/secret/:id", validateToken, async (request, response) => {
+    
+});
+
+
 //Funtkion för token
 function validateToken(request, response, next) { //funktionen validate token
     const authHeader = request.headers["authorization"]; //hämtar authorization, alltså token
