@@ -5,14 +5,14 @@ const router = express.Router(); //router
 const mongoose = require("mongoose"); //Mongoose
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");//jwt
- 
-
+require("dotenv").config(); //dotenv
 
 const User = require("./models/User"); //User från models/User
-
+const Meny = require("./models/meny"); //User från models/User
 
 //ansluta dastabas
 mongoose.set("strictQuery", false);
+
 
 mongoose.connect(process.env.URL).then(() => { //ansluter med url i env
     console.log("connected to databse");
@@ -123,6 +123,61 @@ router.post("/login", async (request, response) => { //vid /login
         console.log("error login")
     }
 });
+
+
+router.get("/meny", async (request, response) => {
+    try {
+        const itemsMeny = await Meny.find({});
+        response.json(itemsMeny);
+    }catch (error) {
+        response.status(500).json({error: 2});
+    }
+})
+
+
+router.post("/meny", async (request, response) => {
+    try {
+        const { name, description, price, type } = request.body;
+        const newItem = new Meny({ name, description, price, type });
+        await newItem.save();
+        response.status(201).json({ message: "Item created" });
+    }catch (error) {
+        response.status(500).json({error: 1});
+        console.log(error)
+    }
+})
+
+router.delete("/meny:id", async (request, response) => {
+
+    let idData = request.params.id; 
+  
+
+    try {
+        const deletedItem = await Meny.findByIdAndDelete(idData);
+
+        return response.json({ message: "item deleted" }); //Meddellande
+    }catch (error) {
+        response.status(400).json({message: "failed delete"}); 
+        console.log(error);
+    }
+})
+
+
+router.put("/meny:id", async (request, response) => {
+
+    let idData = request.params.id; 
+
+    try {
+        const { name, description, price, type } = request.body;
+
+        await Meny.findByIdAndUpdate(idData, { name, description, price, type}, { new: true });
+
+        return response.json({ message: "updated"});
+    }catch (error) {
+        response.status(400).json({message: "failed to update"}); 
+        console.log(error);
+    }
+})
 
 
 

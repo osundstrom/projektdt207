@@ -10,6 +10,7 @@ const jwt = require("jsonwebtoken");//jwt json web token
 const authRoutes = require("./routes/authRoutes"); //authRoutes
 
 const User = require("./routes/models/User");
+const Meny = require("./routes/models/meny");
 
 app.use(cors()); //cors app
 app.use(express.json());  //json
@@ -36,29 +37,13 @@ app.get("/api/secret", validateToken, async (request, response) => { //skyddat r
     //----------------------------------------------//
 
     try {
-        const testUsers = await User.find({})
-        return response.json(testUsers)
+        const menyItems = await Meny.find({});
+        response.json(menyItems);
     } catch (error) {
         console.log(error) //Loggar error
     }
  
-
 })
-
-
-app.post("/api/secret", validateToken, async (request, response) => {
-    
-});
-
-
-app.put("/api/secret/:id", validateToken, async (request, response) => {
-    
-});
-
-
-app.delete("/api/secret/:id", validateToken, async (request, response) => {
-    
-});
 
 
 //Funtkion för token
