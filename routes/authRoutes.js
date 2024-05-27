@@ -8,8 +8,9 @@ const jwt = require("jsonwebtoken");//jwt
 require("dotenv").config(); //dotenv
 
 const User = require("./models/User"); //User från models/User
-const Meny = require("./models/meny"); //User från models/User
+const Meny = require("./models/meny"); 
 const book = require("./models/book");
+const review = require("./models/review");
 
 //ansluta dastabas
 mongoose.set("strictQuery", false);
@@ -216,6 +217,27 @@ router.delete("/booking:id", async (request, response) => {
     }catch (error) {
         response.status(400).json({message: "failed delete"}); 
         console.log(error);
+    }
+})
+
+router.get("/review", async (request, response) => {
+    try {
+        const reviews = await review.find({});
+        response.json(reviews);
+    }catch (error) {
+        response.status(500).json({error});
+    }
+})
+
+router.post("/review", async (request, response) => {
+    try {
+        const { name, rating, message } = request.body;
+        const reviews = new review({ name, rating, message });
+        await reviews.save();
+        response.status(201).json({ message: "review created" });
+    }catch (error) {
+        response.status(500).json({error});
+        console.log(error)
     }
 })
 
