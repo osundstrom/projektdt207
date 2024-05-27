@@ -1,8 +1,7 @@
 
 const mongoose = require("mongoose"); //Mongoose
-const bcrypt = require("bcrypt"); //bcrypt
 
-//schema för användare
+//schema för meny
 const menySchema = new mongoose.Schema ({
     name: { 
         type: String, //typ string
@@ -16,13 +15,13 @@ const menySchema = new mongoose.Schema ({
     },
 
     price: {
-        type: Number, //typ datum
+        type: Number, //typ number
         require: true, //måste
     },
 
     type: {
-        type: String,
-        require: true,
+        type: String, //typ string
+        require: true, //måste
     }
  });
 

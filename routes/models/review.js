@@ -1,7 +1,7 @@
 
 const mongoose = require("mongoose"); //Mongoose
 
-//schema för användare
+//schema för reviews
 const reviewSchema = new mongoose.Schema ({
     name: { 
         type: String, //typ string
@@ -10,13 +10,13 @@ const reviewSchema = new mongoose.Schema ({
     },
 
     rating: {
-        type: Number, 
-        require: true, 
+        type: Number,  //typ number
+        require: true, //måste
     },
 
     message: {
-        type: String, 
-        require: true, 
+        type: String,  //typ string
+        require: true, //måste
     },
 
  });

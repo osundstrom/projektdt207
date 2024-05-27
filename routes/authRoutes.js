@@ -127,116 +127,116 @@ router.post("/login", async (request, response) => { //vid /login
 });
 
 
-router.get("/meny", async (request, response) => {
+router.get("/meny", async (request, response) => { //vid /meny GET
     try {
-        const itemsMeny = await Meny.find({});
-        response.json(itemsMeny);
-    }catch (error) {
+        const itemsMeny = await Meny.find({}); //hämtar alla i meny
+        response.json(itemsMeny); //skickar som response
+    }catch (error) { //vid error
         response.status(500).json({error: 2});
     }
 })
 
 
-router.post("/meny", async (request, response) => {
+router.post("/meny", async (request, response) => { //vid /meny POST
     try {
-        const { name, description, price, type } = request.body;
-        const newItem = new Meny({ name, description, price, type });
-        await newItem.save();
-        response.status(201).json({ message: "Item created" });
-    }catch (error) {
+        const { name, description, price, type } = request.body; //hämtar name, description, price och type från body. 
+        const newItem = new Meny({ name, description, price, type }); //skapar med meny som model
+        await newItem.save(); //sparar
+        response.status(201).json({ message: "Item created" }); //meddelande
+    }catch (error) { //vid error
         response.status(500).json({error: 1});
         console.log(error)
     }
 })
 
-router.delete("/meny:id", async (request, response) => {
+router.delete("/meny:id", async (request, response) => { //vid /meny:id DELETE
 
-    let idData = request.params.id; 
+    let idData = request.params.id;  //sätter idData till id:et
   
 
     try {
-        const deletedItem = await Meny.findByIdAndDelete(idData);
+        const deletedItem = await Meny.findByIdAndDelete(idData); //hitta och radera baserat på idData. 
 
         return response.json({ message: "item deleted" }); //Meddellande
-    }catch (error) {
+    }catch (error) { //vid error
         response.status(400).json({message: "failed delete"}); 
         console.log(error);
     }
 })
 
 
-router.put("/meny:id", async (request, response) => {
+router.put("/meny:id", async (request, response) => { //vid meny:id PUT
 
-    let idData = request.params.id; 
+    let idData = request.params.id; //sätter idData till id:et
 
     try {
-        const { name, description, price, type } = request.body;
+        const { name, description, price, type } = request.body; //hämtar name, description, price och type från body. 
 
+        //hitta rätt baserat på idData och uppdatera dess värden. 
         await Meny.findByIdAndUpdate(idData, { name, description, price, type}, { new: true });
 
-        return response.json({ message: "updated"});
-    }catch (error) {
+        return response.json({ message: "updated"}); //meddelande
+    }catch (error) { //vid error
         response.status(400).json({message: "failed to update"}); 
         console.log(error);
     }
 })
 
 
-router.get("/booking", async (request, response) => {
+router.get("/booking", async (request, response) => { //vid /booking GET
     try {
-        const bookings = await book.find({});
-        response.json(bookings);
-    }catch (error) {
-        response.status(500).json({error});
+        const bookings = await book.find({}); //hämtar all bookningar
+        response.json(bookings); //response bookings 
+    }catch (error) { //vid error
+        response.status(500).json({error}); //meddelande
     }
 })
 
 
-router.post("/booking", async (request, response) => {
+router.post("/booking", async (request, response) => { //vid /booking POST
     try {
-        const { email, phone, firstName, lastName, numberGuests, bookDate } = request.body;
-        const booking = new book({ email, phone, firstName, lastName, numberGuests, bookDate });
-        await booking.save();
-        response.status(201).json({ message: "booking created" });
-    }catch (error) {
-        response.status(500).json({error});
+        const { email, phone, firstName, lastName, numberGuests, bookDate } = request.body; //hämtar allt från body. 
+        const booking = new book({ email, phone, firstName, lastName, numberGuests, bookDate }); //skapar med book som model
+        await booking.save(); //sparar
+        response.status(201).json({ message: "booking created" }); //message
+    }catch (error) { //vid error
+        response.status(500).json({error}); //meddelande
         console.log(error)
     }
 })
 
 
-router.delete("/booking:id", async (request, response) => {
+router.delete("/booking:id", async (request, response) => { //vid /booking DELETE
 
-    let idData = request.params.id; 
+    let idData = request.params.id; //sätter idData till id:et
   
-
     try {
-        const deletedBooking = await book.findByIdAndDelete(idData);
+        const deletedBooking = await book.findByIdAndDelete(idData); //hitta baserat på idData och radera
 
-        return response.json({ message: "booking deleted" }); 
-    }catch (error) {
-        response.status(400).json({message: "failed delete"}); 
+        return response.json({ message: "booking deleted" }); //meddelande
+    }catch (error) { //vid error
+        response.status(400).json({message: "failed delete"});  //meddelande
         console.log(error);
     }
 })
 
-router.get("/review", async (request, response) => {
+router.get("/review", async (request, response) => { //vid /review GET
     try {
-        const reviews = await review.find({});
-        response.json(reviews);
-    }catch (error) {
-        response.status(500).json({error});
+        const reviews = await review.find({}); //hämtar alla reviews
+        response.json(reviews); //response reviews i json format
+    }catch (error) { //error
+        response.status(500).json({error}); //meddelande
     }
 })
 
-router.post("/review", async (request, response) => {
+router.post("/review", async (request, response) => { //vid /review POST
     try {
-        const { name, rating, message } = request.body;
-        const reviews = new review({ name, rating, message });
-        await reviews.save();
-        response.status(201).json({ message: "review created" });
-    }catch (error) {
-        response.status(500).json({error});
+        const { name, rating, message } = request.body; //hämtar allt som krävs från body
+        const reviews = new review({ name, rating, message }); //ny skapas med review som model
+        await reviews.save(); //sparar
+        response.status(201).json({ message: "review created" }); //meddelande
+    }catch (error) { //vid error
+        response.status(500).json({error}); //meddelande
         console.log(error)
     }
 })

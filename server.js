@@ -37,8 +37,8 @@ app.get("/api/secret", validateToken, async (request, response) => { //skyddat r
     //----------------------------------------------//
 
     try {
-        const menyItems = await Meny.find({});
-        response.json(menyItems);
+        const menyItems = await Meny.find({}); //hämtar alla meny
+        response.json(menyItems); //response menyItems
     } catch (error) {
         console.log(error) //Loggar error
     }

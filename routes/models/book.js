@@ -1,5 +1,4 @@
 const mongoose = require("mongoose"); //Mongoose
-const bcrypt = require("bcrypt"); //bcrypt
 
 //schema för booking
 const bookSchema = new mongoose.Schema ({
@@ -14,23 +13,23 @@ const bookSchema = new mongoose.Schema ({
     },
 
     firstName: {
-        type: String, //typ datum
+        type: String, //typ string
         require: true, //måste
     },
 
     lastName: {
-        type: String,
-        require: true,
+        type: String, //typ string
+        require: true, //måste
     },
 
     numberGuests: {
-        type: Number,
-        require: true,
+        type: Number, //typ number
+        require: true, //måste
     },
 
     bookDate: {
-        type: Date,
-        require: true,
+        type: Date, //typ date
+        require: true, //måste
     }
 
 
