@@ -9,6 +9,7 @@ require("dotenv").config(); //dotenv
 
 const User = require("./models/User"); //User från models/User
 const Meny = require("./models/meny"); //User från models/User
+const book = require("./models/book");
 
 //ansluta dastabas
 mongoose.set("strictQuery", false);
@@ -175,6 +176,45 @@ router.put("/meny:id", async (request, response) => {
         return response.json({ message: "updated"});
     }catch (error) {
         response.status(400).json({message: "failed to update"}); 
+        console.log(error);
+    }
+})
+
+
+router.get("/booking", async (request, response) => {
+    try {
+        const bookings = await book.find({});
+        response.json(bookings);
+    }catch (error) {
+        response.status(500).json({error});
+    }
+})
+
+
+router.post("/booking", async (request, response) => {
+    try {
+        const { email, phone, firstName, lastName, numberGuests, bookDate } = request.body;
+        const booking = new book({ email, phone, firstName, lastName, numberGuests, bookDate });
+        await booking.save();
+        response.status(201).json({ message: "booking created" });
+    }catch (error) {
+        response.status(500).json({error});
+        console.log(error)
+    }
+})
+
+
+router.delete("/booking:id", async (request, response) => {
+
+    let idData = request.params.id; 
+  
+
+    try {
+        const deletedBooking = await book.findByIdAndDelete(idData);
+
+        return response.json({ message: "booking deleted" }); 
+    }catch (error) {
+        response.status(400).json({message: "failed delete"}); 
         console.log(error);
     }
 })
