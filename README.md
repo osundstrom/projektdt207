@@ -1,4 +1,4 @@
-# Projekt - DT207G - NoNonsenseBurgers - backend
+# Projekt - DT207G - NoNonsenseBurgers
 Under detta projekt skapas det autensiering för att logga in, det skapas flera collections i en databas hos MongoDB, och dessa hämtas och visas/redigeras på olika sätt beroende på vart de ska visas på hemsidna.  
 
 ## Installation
